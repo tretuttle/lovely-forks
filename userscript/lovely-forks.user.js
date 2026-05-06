@@ -1,11 +1,11 @@
 // ==UserScript==
-// @name         Lovely Forks
-// @namespace    musically-ut
-// @version      2.6.4
+// @name         Lovely Forks (Fixed)
+// @namespace    https://github.com/tretuttle/lovely-forks
+// @version      2.6.5
 // @description  Show notable forks of GitHub projects.
-// @homepage     https://github.com/musically-ut/lovely-forks
-// @icon         https://github.com/musically-ut/lovely-forks/raw/master/userscript/icon.png
-// @author       musically-ut
+// @homepage     https://github.com/tretuttle/lovely-forks
+// @icon         https://github.com/tretuttle/lovely-forks/raw/master/userscript/icon.png
+// @author       tretuttle (fork of musically-ut)
 // @match        *://github.com/*
 // @grant        GM_addStyle
 // @run-at       document-end

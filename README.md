@@ -1,11 +1,13 @@
 ![Lovely forks logo](http://musicallyut.xyz/docs/lovely-forks/logo.png)
-## Lovely forks
+## Lovely Forks (Fixed)
 
-<p><a href="https://addons.mozilla.org/firefox/addon/lovely-forks/"><img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" width="18" /> Firefox addon</a></p>
-<p><a href="https://chrome.google.com/webstore/detail/lovely-forks/ialbpcipalajnakfondkflpkagbkdoib"><img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" width="18" /> Chrome extension</a>
-</p>
- 
-<p>Can also be installed on Opera through the <a href="https://addons.opera.com/extensions/details/download-chrome-extension-9/"><img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png" width="18" /> Opera Chrome-extension addon</a>.</p>
+_A maintained fork of [musically-ut/lovely-forks](https://github.com/musically-ut/lovely-forks), updated to work with modern GitHub's repo header layout. The original repo-title selector stopped matching after GitHub's Turbo-based layout rewrite, leaving the indicator invisible on most pages; upstream appears to be unmaintained. This fork carries the project forward on a best-effort basis._
+
+<p>[AMO listing — pending publication]</p>
+<p>[Chrome Web Store listing — pending publication]</p>
+<p>[Greasy Fork listing for the userscript — pending publication]</p>
+
+<p>Once published to the Chrome Web Store, the extension can also be installed on Opera through the <a href="https://addons.opera.com/extensions/details/download-chrome-extension-9/"><img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png" width="18" /> Opera Chrome-extension addon</a>.</p>
 
 ----
 
@@ -67,12 +69,27 @@ integration):
 <img alt="vim-fugitive" src="https://musicallyut.xyz/docs/lovely-forks/fugitive-fork.png" width="80%" />
 </p>
 
+## What's different in this fork
+
+  - **Modern repo-header selector.** The original anchor (`main > div > div:not(.repository-content) > div`) no longer matches GitHub's current DOM. This fork uses `#repo-title-component` and walks one level up — a more stable anchor under GitHub's React/Turbo-rendered header.
+  - **Turbo soft-navigation handling.** GitHub now uses Turbo for in-page navigation; the original `pjax:end`-only listener did not fire on Turbo soft-navs, so the indicator vanished after clicking between repos. This fork listens to `pjax:end`, `turbo:load`, and `turbo:render`.
+  - **Stale-closure fix.** The init logic used to capture `user`/`repo` at script start, so a soft-nav from `foo/bar` to `baz/qux` would re-render the indicator with the *previous* repo's data. The entry block was refactored to re-parse the URL on every event.
+  - **Listener registration is unconditional.** Previously, listeners were only attached if the initial page was a repo page; landing on a profile/settings page first and then navigating to a repo meant the indicator never appeared. Listeners are now registered regardless of the initial path.
+  - **Best-effort, not bulletproof.** GitHub's DOM will keep evolving. A fully robust solution would add a `MutationObserver` around `data-turbo-replace` wipes; that's out of scope for this set of fixes. Issues and PRs welcome.
+
 ## Development
 
 Please install the following before building the extension:
 
   - [`web-ext`](https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Getting_started_with_web-ext)
   - [`jq`](https://stedolan.github.io/jq/) **Note:** This is not the `jq` on NPM, which is a server-side `jQuery` replacement.
+
+Clone this fork:
+
+```bash
+git clone https://github.com/tretuttle/lovely-forks.git
+cd lovely-forks
+```
 
 The project is supplied with a `Makefile` which can produce final files for both Firefox and Chrome.
 
@@ -95,9 +112,17 @@ For Firefox, the easiest way to test the packaged extension would be to download
 
 If the browser still complains that the package has not been signed, then go to [`about:config`](about:config) and set `xpinstall.signatures.required` to `false`. Note that this setting only takes effect on the Developer Edition and the Unbranded versions of the browser even though it shows up in `about:config` pages of the release channel versions as well.
 
+### Reporting issues
+
+For bugs and feature requests in **this fork**, use [github.com/tretuttle/lovely-forks/issues](https://github.com/tretuttle/lovely-forks/issues). The upstream issue tracker is no longer actively monitored.
+
 ## See Also
 
  - [useful-forks.github.io](https://github.com/useful-forks/useful-forks.github.io) and [their Chrome extension](https://chrome.google.com/webstore/detail/useful-forks/aflbdmaojedofngiigjpnlabhginodbf).
+
+## Fork maintenance
+
+This fork is maintained by [tretuttle](https://github.com/tretuttle). The original project — including the design, implementation, icons, and the entire feature set described above — is the work of [musically-ut](https://github.com/musically-ut) and the contributors credited below. This fork's role is to keep the extension working as GitHub's frontend evolves; all credit for the project itself belongs upstream.
 
 ## Acknowledgements
 
