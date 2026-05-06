@@ -442,11 +442,17 @@ async function runFor (user, repo) {
 
 /* Script execution */
 
-const [, user, repo] = window.location.pathname.split('/')
-if (user && repo) {
-  runFor(user, repo)
-  document.addEventListener('pjax:end', () => { runFor(user, repo) })
-} else if (DEBUG) {
-  console.log(_logName,
-    'The URL did not identify a username/repository pair.')
+function runForCurrentUrl () {
+  const [, user, repo] = window.location.pathname.split('/')
+  if (user && repo) {
+    runFor(user, repo)
+  } else if (DEBUG) {
+    console.log(_logName,
+      'The URL did not identify a username/repository pair.')
+  }
+}
+
+runForCurrentUrl()
+for (const evt of ['pjax:end', 'turbo:load', 'turbo:render']) {
+  document.addEventListener(evt, runForCurrentUrl)
 }

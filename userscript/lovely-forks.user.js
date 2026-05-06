@@ -496,13 +496,17 @@ function runFor(user, repo) {
 
 /* Script execution */
 
-var pathComponents = window.location.pathname.split('/');
-if (pathComponents.length >= 3) {
-    var user = pathComponents[1], repo = pathComponents[2];
-    runFor(user, repo);
-} else {
-    if (DEBUG) {
+function runForCurrentUrl() {
+    var pathComponents = window.location.pathname.split('/');
+    if (pathComponents.length >= 3) {
+        runFor(pathComponents[1], pathComponents[2]);
+    } else if (DEBUG) {
         console.log(_logName,
-                    'The URL did not identify a username/repository pair.');
+            'The URL did not identify a username/repository pair.');
     }
 }
+
+runForCurrentUrl();
+['pjax:end', 'turbo:load', 'turbo:render'].forEach(function (evt) {
+    document.addEventListener(evt, runForCurrentUrl);
+});
