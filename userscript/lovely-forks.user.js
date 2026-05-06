@@ -135,7 +135,8 @@ function getForksElement() {
 
     // If the layout of the page changes, we'll have to change this location.
     // We should make sure that we do not accidentally cause errors here.
-    var repoName = document.querySelector('main > div > div > div');
+    var titleComponent = document.querySelector('#repo-title-component');
+    var repoName = titleComponent ? titleComponent.parentElement : null;
     if (repoName) {
         try {
             text = document.createElement('span');
