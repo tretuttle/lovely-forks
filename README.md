@@ -79,6 +79,16 @@ integration):
 
 ## Development
 
+### Automatic Way
+
+Please make sure that `docker` is already installed.
+Run the `build.sh`, it should clone the project, and handle all the copying. The final output should be in:
+
+  - For FireFox: `/tmp/<project-name>/build`
+  - For Chrome:  `/tmp/<project-name>/tmp`
+
+### Manual Way
+
 Please install the following before building the extension:
 
   - [`web-ext`](https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Getting_started_with_web-ext)
